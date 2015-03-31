@@ -1,0 +1,7 @@
+<h1>Name: <%= @request.name %></h1>
+<h3>Email: <%= @request.email %></h3>
+<h3>Department: <%= @request.department %></h3>
+<p>Message: <%= @request.message %></p>
+<br>
+<%= link_to "Edit", edit_request_path(@request) %>
+<%= button_to "Delete", request_path(@request), method: :delete, data: {confirm: "Are you sure you want to delete this Request?"} %>

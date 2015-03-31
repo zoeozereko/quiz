@@ -1,0 +1,39 @@
+<h1> All Support Requests </h1>
+
+<%= form_tag(requests_path, :method => "get", id: "search-form") do %>
+<%= text_field_tag :search, params[:search], placeholder: "Search Requests" %>
+<%= submit_tag "Search", :name => nil %>
+<% end %>
+
+<table border="2" style="width:100%">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Department</th>
+      <th>Message</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  </tbody>
+    <% @requests.each do |r| %>
+    <tr>
+      <td><%= link_to r.name, request_path(r) %></td>
+      <td><%= mail_to r.email %></td>
+      <td><%= r.department %></td>
+      <td><%= r.message %></td>
+      <td><%= link_to "Edit", edit_request_path(r)%>
+          <%= button_to "Delete", request_path(r), method: :delete, data: 
+             {confirm: "Are you sure you want to delete this request?"} %>
+          <% if r.done? %>
+            <%= button_to "Not Done", request_path(r, request: {done: false}), 
+            method: :patch %>
+          <% else %>
+            <%= button_to "Done", request_path(r, request: {done: true}), 
+            method: :patch %>
+          <% end %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
